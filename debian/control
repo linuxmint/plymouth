@@ -1,0 +1,246 @@
+Source: plymouth
+Section: misc
+Priority: optional
+Maintainer: Ubuntu Developers <ubuntu-devel-discuss@lists.ubuntu.com>
+XSBC-Original-Maintainer: Laurent Bigonville <bigon@debian.org>
+Uploaders: Sjoerd Simons <sjoerd@debian.org>
+Build-Depends:
+ debhelper (>= 9),
+ dh-autoreconf,
+ dh-systemd,
+ docbook-xsl,
+ libdrm-dev,
+ libgtk-3-dev (>= 3.14.0),
+ libpango1.0-dev,
+ libpng-dev,
+ libudev-dev,
+ pkg-config,
+ systemd,
+ xsltproc,
+Standards-Version: 3.9.6
+Homepage: http://www.freedesktop.org/wiki/Software/Plymouth
+Vcs-Git: git://anonscm.debian.org/collab-maint/plymouth.git
+Vcs-Browser: http://anonscm.debian.org/gitweb/?p=collab-maint/plymouth.git
+
+Package: plymouth
+Architecture: linux-any
+Pre-Depends: ${misc:Pre-Depends}
+Depends:
+ ${misc:Depends},
+ ${shlibs:Depends},
+ initramfs-tools | dracut,
+ init-system-helpers (>= 1.18),
+Conflicts: console-common,
+           plymouth-theme-lubuntu-text (<< 0.57~)
+Breaks: plymouth-drm (<< 0.9.0-6~), plymouth-themes (<< 0.9.0-8~),
+        plymouth-theme-ubuntu-logo (<< 0.9.2-3ubuntu1~),
+        plymouth-theme-ubuntu-text (<< 0.9.2-3ubuntu1~),
+        plymouth-theme-edubuntu (<< 15.12.1~),
+        plymouth-theme-sability (<< 1.3~),
+        plymouth-theme-sabily-text (<< 1.3~),
+        plymouth-theme-ubuntustudio (<< 0.50~),
+        plymouth-theme-ubuntu-mate-logo (<< 15.12.1~),
+        plymouth-theme-ubuntu-mate-text (<< 15.12.1~),
+        plymouth-theme-xubuntu-logo (<< 15.12.1~),
+        plymouth-theme-xubuntu-text (<< 15.12.1~),
+        plymouth-theme-lubuntu-logo (<< 0.57~),
+        plymouth-theme-kubuntu-logo (<< 1:16.04ubuntu1~),
+        plymouth-theme-kubuntu-text (<< 1:16.04ubuntu1~),
+        plymouth-theme-ubuntu-gnome-logo (<< 16.04.1~),
+        plymouth-theme-ubuntu-gnome-text (<< 16.04.1~),
+Replaces: plymouth-drm (<< 0.9.0-6~), plymouth-themes (<< 0.9.0-8~),
+          libplymouth2 (<< 0.9.2-3ubuntu1~),
+Suggests:
+ desktop-base,
+ plymouth-themes,
+Recommends: plymouth-theme-ubuntu-text | plymouth-theme
+Description: boot animation, logger and I/O multiplexer
+ Plymouth provides a boot-time I/O multiplexing framework - the most obvious
+ use for which is to provide an attractive graphical animation in place of
+ the text messages that normally get shown during boot. (The messages are
+ instead redirected to a logfile for later viewing.) However, in event-driven
+ boot systems Plymouth can also usefully handle user interaction such as
+ password prompts for encrypted file systems.
+ .
+ This package provides the basic framework, enabling a text-mode animation.
+
+Package: plymouth-x11
+Architecture: linux-any
+Depends:
+ ${misc:Depends},
+ ${shlibs:Depends},
+ plymouth (= ${binary:Version}),
+Recommends: plymouth-theme-ubuntu-logo | plymouth-theme
+Suggests: gdm
+Description: boot animation, logger and I/O multiplexer - X11 renderer
+ Plymouth provides a boot-time I/O multiplexing framework - the most obvious
+ use for which is to provide an attractive graphical animation in place of
+ the text messages that normally get shown during boot. (The messages are
+ instead redirected to a logfile for later viewing.) However, in event-driven
+ boot systems Plymouth can also usefully handle user interaction such as
+ password prompts for encrypted file systems.
+ .
+ This package contains the X11 renderer for a graphical boot splash.
+
+Package: plymouth-dbg
+Architecture: linux-any
+Section: debug
+Priority: extra
+Depends:
+ ${misc:Depends},
+ plymouth (= ${binary:Version}),
+ libplymouth4 (= ${binary:Version}),
+ plymouth-x11 (= ${binary:Version}),
+ libplymouth-dev (= ${binary:Version}),
+ plymouth-themes (= ${binary:Version}),
+ plymouth-theme-ubuntu-logo (= ${binary:Version}),
+ plymouth-theme-ubuntu-text (= ${binary:Version}),
+ plymouth-label (= ${binary:Version}),
+Description: boot animation, logger and I/O multiplexer - debug symbols
+ Plymouth provides a boot-time I/O multiplexing framework - the most obvious
+ use for which is to provide an attractive graphical animation in place of
+ the text messages that normally get shown during boot. (The messages are
+ instead redirected to a logfile for later viewing.) However, in event-driven
+ boot systems Plymouth can also usefully handle user interaction such as
+ password prompts for encrypted file systems.
+ .
+ This package contains the debugging symbols.
+
+Package: libplymouth4
+Architecture: any
+Multi-Arch: same
+Section: libs
+Pre-Depends: ${misc:Pre-Depends}
+Depends: ${misc:Depends}, ${shlibs:Depends}
+Breaks: plymouth (<< 0.9.2-1~)
+Replaces: plymouth (<< 0.9.2-1~)
+Description: graphical boot animation and logger - shared libraries
+ Plymouth is an application that runs very early in the boot process
+ (even before the root filesystem is mounted!) that provides a graphical
+ boot animation while the boot process happens in the background.
+ .
+ This package contains the shared libraries.
+
+Package: libplymouth-dev
+Architecture: any
+Multi-Arch: same
+Section: libdevel
+Depends: libplymouth4 (= ${binary:Version}), ${misc:Depends}, ${shlibs:Depends}
+Breaks: plymouth-dev (<< 0.9.2-1~)
+Replaces: plymouth-dev (<< 0.9.2-1~)
+Description: graphical boot animation and logger - development files
+ Plymouth is an application that runs very early in the boot process
+ (even before the root filesystem is mounted!) that provides a graphical
+ boot animation while the boot process happens in the background.
+ .
+ This package contains the development files to build Plymouth plugins.
+
+Package: plymouth-label
+Architecture: linux-any
+Depends: 
+ ${misc:Depends},
+ ${shlibs:Depends},
+ plymouth (= ${binary:Version}),
+ ttf-ubuntu-font-family,
+Description: boot animation, logger and I/O multiplexer - label control
+ Plymouth provides a boot-time I/O multiplexing framework - the most obvious
+ use for which is to provide an attractive graphical animation in place of
+ the text messages that normally get shown during boot. (The messages are
+ instead redirected to a logfile for later viewing.) However, in event-driven
+ boot systems Plymouth can also usefully handle user interaction such as
+ password prompts for encrypted file systems.
+ .
+ This package contains the label control, used by various graphical themes
+ to render text.
+
+Package: plymouth-themes
+Architecture: linux-any
+Depends:
+ ${misc:Depends},
+ ${shlibs:Depends},
+ plymouth (= ${binary:Version}),
+ fontconfig-config,
+ fonts-dejavu-core | ttf-dejavu-core,
+ plymouth-label (= ${binary:Version}),
+Conflicts:
+ plymouth-themes-all,
+ plymouth-themes-fade-in,
+ plymouth-themes-glow,
+ plymouth-themes-script,
+ plymouth-themes-solar,
+ plymouth-themes-spinfinity,
+ plymouth-themes-spinner,
+Replaces:
+ plymouth-themes-all,
+ plymouth-themes-fade-in,
+ plymouth-themes-glow,
+ plymouth-themes-script,
+ plymouth-themes-solar,
+ plymouth-themes-spinfinity,
+ plymouth-themes-spinner,
+ plymouth-drm (<< 0.9.0-6~)
+Provides:
+ plymouth-theme,
+ plymouth-themes-all,
+ plymouth-themes-fade-in,
+ plymouth-themes-glow,
+ plymouth-themes-script,
+ plymouth-themes-solar,
+ plymouth-themes-spinfinity,
+ plymouth-themes-spinner,
+Breaks: plymouth-drm (<< 0.9.0-6~)
+Description: boot animation, logger and I/O multiplexer - themes
+ Plymouth provides a boot-time I/O multiplexing framework - the most obvious
+ use for which is to provide an attractive graphical animation in place of
+ the text messages that normally get shown during boot. (The messages are
+ instead redirected to a logfile for later viewing.) However, in event-driven
+ boot systems Plymouth can also usefully handle user interaction such as
+ password prompts for encrypted file systems.
+ .
+ This package provides the following themes:
+ .
+  * fade-in: features a centered logo that fades in and out while stars twinkle
+    around the logo during system boot up.
+  * glow: features a pie chart as progress indicator.
+  * script: features a simple base theme.
+  * solar: features a blue flamed sun with animated solar flares.
+  * spinfinity: features a centered logo and animated spinner that spins in the
+    shape of an infinity sign.
+  * spinner: features a simple theme with a small spinner on a dark background.
+
+Package: plymouth-theme-ubuntu-logo
+Architecture: linux-any
+Depends:
+ ${misc:Depends},
+ ${shlibs:Depends},
+ plymouth (= ${binary:Version}),
+ plymouth-label (= ${binary:Version}),
+Provides: plymouth-theme,
+Description: boot animation, logger and I/O multiplexer - ubuntu theme
+ Plymouth provides a boot-time I/O multiplexing framework - the most obvious
+ use for which is to provide an attractive graphical animation in place of
+ the text messages that normally get shown during boot. (The messages are
+ instead redirected to a logfile for later viewing.) However, in event-driven
+ boot systems Plymouth can also usefully handle user interaction such as
+ password prompts for encrypted file systems.
+ .
+ This package contains the default ubuntu-logo theme.
+
+Package: plymouth-theme-ubuntu-text
+Architecture: linux-any
+Depends:
+ ${misc:Depends},
+ ${shlibs:Depends},
+ plymouth (= ${binary:Version}),
+ lsb-release,
+Provides: plymouth-theme,
+Description: boot animation, logger and I/O multiplexer - ubuntu text theme
+ Plymouth provides a boot-time I/O multiplexing framework - the most obvious
+ use for which is to provide an attractive graphical animation in place of
+ the text messages that normally get shown during boot. (The messages are
+ instead redirected to a logfile for later viewing.) However, in event-driven
+ boot systems Plymouth can also usefully handle user interaction such as
+ password prompts for encrypted file systems.
+ .
+ This package contains the default ubuntu-text text theme used when no
+ support for a graphical theme is found on your system.
