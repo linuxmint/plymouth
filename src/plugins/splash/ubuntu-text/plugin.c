@@ -442,13 +442,14 @@ animate_frame (ply_boot_splash_plugin_t *plugin,
       display_width = ply_text_display_get_number_of_columns (view->display);
       display_height = ply_text_display_get_number_of_rows (view->display);
 
-      ply_text_display_set_cursor_position (view->display,
-                                            (display_width - 12) / 2,
+      if (strcmp (plugin->title, "None") != 0) {
+        ply_text_display_set_cursor_position (view->display,
+                                            (display_width - strlen (plugin->title)) / 2,
                                             display_height / 2);
-
-      ply_text_display_set_background_color (view->display, PLY_TERMINAL_COLOR_BLACK);
-      ply_text_display_set_foreground_color (view->display, PLY_TERMINAL_COLOR_WHITE);
-      ply_text_display_write (view->display, "%s", plugin->title);
+        ply_text_display_set_background_color (view->display, PLY_TERMINAL_COLOR_BLACK);
+        ply_text_display_set_foreground_color (view->display, PLY_TERMINAL_COLOR_WHITE);
+        ply_text_display_write (view->display, "%s", plugin->title);
+      }
 
       ply_text_display_set_cursor_position (view->display,
                                             (display_width - 10) / 2,
