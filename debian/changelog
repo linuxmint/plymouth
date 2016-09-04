@@ -1,3 +1,9 @@
+plymouth (0.9.2+mint1) sarah; urgency=medium
+
+  * Ubuntu-text plugin: Center title and don't show it if it's equal to "None"
+
+ -- Clement Lefebvre <root@linuxmint.com>  Sun, 04 Sep 2016 10:48:07 +0100
+
 plymouth (0.9.2-3ubuntu13) xenial; urgency=medium
 
   * debian/plymouth-theme-ubuntu-text.postinst: Make rmdir less noisy.
